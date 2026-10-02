@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oficina · FreteTwin (Admin)</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#102a2d;--coral:#ef6d4e;--bg:#f4f7f7;--card:#fff;--muted:#5a6c6d;--line:#e3eaea;--ok:#2e9e5b;--warn:#d99413;--bad:#c0392b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+/* LOGIN */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink)}
+.login-box{background:#fff;border-radius:18px;padding:48px 44px;width:380px;max-width:92vw;text-align:center}
+.brand{font-size:30px;font-weight:800;color:var(--ink)}
+.brand span{color:var(--coral)}
+.login-box h1{font-size:22px;margin:10px 0 6px}
+.login-box p{color:var(--muted);font-size:14px;margin-bottom:22px}
+.login-box input{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:10px;font-size:16px;font-family:inherit;margin-bottom:14px}
+.login-box button{width:100%;background:var(--coral);color:#fff;border:none;border-radius:10px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.login-err{color:var(--bad);font-size:13px;margin-top:10px;display:none}
+/* APP */
+#app{display:none}
+header.app{background:var(--ink);color:#fff;padding:18px 0;position:sticky;top:0;z-index:40}
+.head-in{display:flex;align-items:center;justify-content:space-between}
+.head-in .logo{font-size:24px;font-weight:800}
+.head-in .logo span{color:var(--coral)}
+.head-in .t{font-weight:800;font-size:18px;text-align:right}
+.head-in .t small{display:block;font-weight:500;font-size:12px;color:#9fb3b3}
+.tabs{display:flex;gap:8px;margin:26px 0;flex-wrap:wrap}
+.tab{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:11px 22px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink)}
+.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.panel{display:none;padding-bottom:70px}
+.panel.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.dcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+.dcard .dn{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--coral)}
+.dcard h3{margin:8px 0 10px;font-size:19px}
+.dcard ul{list-style:none}
+.dcard li{font-size:14px;color:var(--muted);padding:5px 0 5px 18px;position:relative}
+.dcard li::before{content:"▸";position:absolute;left:0;color:var(--coral)}
+/* PIPELINE */
+.pform{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;align-items:end}
+.pform label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
+.pform input,.pform select{padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:15px}
+.pform button{background:var(--coral);color:#fff;border:none;border-radius:10px;padding:12px 26px;font-weight:700;cursor:pointer;font-family:inherit;font-size:15px}
+.carga{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px}
+.carga .dh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+.carga .nm{font-size:18px;font-weight:800}
+.carga .eq{font-size:13px;color:var(--muted);font-weight:600}
+.badge{display:inline-block;font-size:12px;font-weight:800;border-radius:99px;padding:4px 12px;margin-left:8px}
+.badge.ok{background:#e3f5ea;color:var(--ok)}
+.badge.bad{background:#fbe4e0;color:var(--bad)}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin:12px 0 16px}
+.bar i{display:block;height:100%;background:var(--coral);border-radius:99px;transition:width .3s}
+.gates{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.gate{display:flex;gap:10px;align-items:flex-start;background:var(--bg);border-radius:10px;padding:10px 12px;font-size:13.5px;cursor:pointer}
+.gate input{margin-top:3px;accent-color:var(--coral);width:16px;height:16px}
+.gate.done{color:var(--muted);text-decoration:line-through}
+.gate.blocked{opacity:.55}
+.del{background:none;border:none;color:var(--bad);cursor:pointer;font-size:13px;font-weight:700}
+/* CALC */
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;max-width:760px}
+.calc .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.calc label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
+.calc input,.calc select{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:15px}
+.calc button{background:var(--ink);color:#fff;border:none;border-radius:10px;padding:14px;font-weight:700;cursor:pointer;font-family:inherit;font-size:15px;width:100%;margin-top:6px}
+.result{margin-top:22px;background:var(--bg);border-radius:12px;padding:22px;display:none}
+.result.show{display:block}
+.rline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.rline:last-child{border:none}
+.rline b{font-size:16px}
+.rline.hl b{color:var(--coral);font-size:19px}
+.rline .ok{color:var(--ok);font-weight:800}
+.rline .bad{color:var(--bad);font-weight:800}
+/* TABELA ANTT */
+.antt{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;max-width:100%;overflow-x:auto}
+table.antt-t{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
+table.antt-t th{background:var(--ink);color:#fff;padding:10px 8px;font-size:12px}
+table.antt-t td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+table.antt-t td:first-child,table.antt-t th:first-child{text-align:left;font-weight:700}
+.fnote{font-size:13px;color:var(--muted);margin-top:14px;max-width:900px;line-height:1.6}
+@media(max-width:640px){.calc .row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="login-box">
+    <div class="brand">Frete<span>Twin</span></div>
+    <h1>Oficina · Acesso Admin</h1>
+    <p>Área restrita. Somente pessoal autorizado.</p>
+    <input type="password" id="pw" placeholder="Senha" autocomplete="off">
+    <button onclick="tryLogin()">Entrar</button>
+    <div class="login-err" id="loginErr">Senha incorreta.</div>
+  </div>
+</div>
+
+<div id="app">
+  <header class="app">
+    <div class="wrap head-in">
+      <div class="logo">Frete<span style="color:var(--coral)">Twin</span></div>
+      <div class="t">Oficina<small>Painel administrativo · operação Brasil</small></div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('deps',this)">Departamentos</button>
+      <button class="tab" onclick="showTab('pipe',this)">Pipeline de cargas</button>
+      <button class="tab" onclick="showTab('calc',this)">Calculadora de frete</button>
+      <button class="tab" onclick="showTab('antt',this)">Tabela ANTT</button>
+    </div>
+
+    <!-- DEPARTAMENTOS -->
+    <div class="panel active" id="p-deps">
+      <div class="grid" id="depGrid"></div>
+    </div>
+
+    <!-- PIPELINE DE CARGAS -->
+    <div class="panel" id="p-pipe">
+      <div class="pform">
+        <div><label>Embarcador</label><input id="cShipper" placeholder="Ex. Indústria Alfa Ltda"></div>
+        <div><label>Origem → Destino</label><input id="cRoute" placeholder="Ex. São Paulo/SP → Santos/SP" style="min-width:240px"></div>
+        <div><label>Tipo de carga</label><select id="cCargo"></select></div>
+        <div><label>Veículo</label><select id="cVeh"></select></div>
+        <div><label>Distância (km)</label><input id="cKm" type="number" min="1" placeholder="350"></div>
+        <div><label>Valor do frete (R$)</label><input id="cValue" type="number" min="0" step="0.01" placeholder="2800"></div>
+        <div><label>Telefone</label><input id="cPhone" placeholder="+55 ..."></div>
+        <button onclick="addCarga()">Adicionar</button>
+      </div>
+      <div id="cargaList"></div>
+    </div>
+
+    <!-- CALCULADORA -->
+    <div class="panel" id="p-calc">
+      <div class="calc">
+        <div class="row">
+          <div><label>Tipo de carga</label><select id="kCargo"></select></div>
+          <div><label>Veículo</label><select id="kVeh"></select></div>
+        </div>
+        <div class="row">
+          <div><label>Distância (km)</label><input id="kKm" type="number" value="350" min="1"></div>
+          <div><label>Frete negociado (R$)</label><input id="kFrete" type="number" value="2800" min="0" step="0.01"></div>
+        </div>
+        <button onclick="calcFrete()">Calcular</button>
+        <div class="result" id="kResult"></div>
+      </div>
+      <p class="fnote">Fórmula oficial ANTT: <b>piso mínimo = (distância × CCD) + CC</b>. CCD = custo de deslocamento (R$/km), CC = carga e descarga (R$ fixo por viagem). A FreteTwin cobra <b>8% sobre o valor do frete</b>.</p>
+    </div>
+
+    <!-- TABELA ANTT -->
+    <div class="panel" id="p-antt">
+      <div class="antt"><table class="antt-t" id="anttTable"></table></div>
+      <p class="fnote" id="anttNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== CONFIG ====== */
+const ADMIN_PASS = "fretetwin2026";
+
+/* Coeficientes oficiais ANTT — vigentes desde 30/09/2026 (atualização extraordinária pelo diesel).
+   Tabela A (operação padrão, veículo e implemento próprios). Conferir sempre a calculadora oficial da ANTT:
+   a tabela é revista semestralmente (jan/jul) ou quando o diesel varia ±5%. */
+const EIXOS = [2,3,4,5,6,7,9];
+const CARGAS = {
+  geral:        {nome:"Carga geral",          ccd:[4.0738,5.2177,5.9180,6.8284,7.5347,8.2727,9.4114],  cc:[451.84,541.86,588.86,657.56,671.93,831.66,903.32]},
+  granel_sol:   {nome:"Granel sólido",        ccd:[4.1056,5.2555,5.9476,6.8548,7.5641,8.2316,9.4318],  cc:[460.59,552.24,597.00,664.83,680.01,820.34,908.91]},
+  granel_liq:   {nome:"Granel líquido",      ccd:[4.1796,5.3511,6.1019,7.0226,7.7372,8.3700,9.5909],  cc:[471.98,569.57,621.52,693.08,709.72,840.50,934.76]},
+  frigorificada:{nome:"Frigorificada/aquecida", ccd:[4.8234,6.1659,7.0345,8.0623,8.8911,9.8134,11.1479], cc:[520.07,623.27,686.63,757.98,772.35,982.76,1067.06]},
+  conteiner:    {nome:"Conteinerizada",       ccd:[null,5.2282,5.8755,6.7910,7.4986,8.2292,9.3486],    cc:[null,544.75,577.15,647.29,662.01,819.69,886.05]},
+  neogranel:    {nome:"Neogranel",            ccd:[3.6743,5.2162,5.9453,6.8284,7.5347,8.2727,9.4114],  cc:[451.84,541.44,596.35,657.56,671.93,831.66,903.32]}
+};
+const VEICULOS = [
+  {id:"toco",    nome:"Toco (rígido)",              eixos:2},
+  {id:"truck",   nome:"Truck (rígido)",             eixos:3},
+  {id:"carr4",   nome:"Carreta 4 eixos",            eixos:4},
+  {id:"carr5",   nome:"Carreta LS 5 eixos",         eixos:5},
+  {id:"carr6",   nome:"Carreta LS/Vanderleia 6 eixos", eixos:6},
+  {id:"bitrem",  nome:"Bitrem 7 eixos",             eixos:7},
+  {id:"rodotrem",nome:"Rodotrem 9 eixos",           eixos:9}
+];
+const GATES = ["Dados da carga completos","RNTRC do transportador válido","Frete ≥ piso mínimo ANTT","CIOT gerado","MDF-e emitido","CT-e emitido","Carregado / em trânsito","Comprovante de entrega","Faturado (8%)"];
+const DEPS = [
+  {n:"01",t:"Recepção",f:["Vigia o WhatsApp 24/7 (bot em português)","Responde o rotineiro e pede dados faltantes","Classifica e escala para coordenação","Não promete tarifas nem prazos sem validação"]},
+  {n:"02",t:"Cadastro",f:["Coleta dados do embarcador: CNPJ, carga, origem/destino","Verifica documentos e situação cadastral","Cria o cliente no sistema"]},
+  {n:"03",t:"Compliance",f:["Verifica RNTRC do transportador na ANTT","Valida frete ≥ piso mínimo da tabela oficial","Gera o CIOT da operação","Confere MDF-e e CT-e antes do embarque"]},
+  {n:"04",t:"Operações",f:["Radar de fretes no FreteBras por veículo e rota","Negociação semiautomática com transportadores","Confirma veículo e monta a operação","Acompanha carregamento e trânsito"]},
+  {n:"05",t:"Documentos",f:["Emite e arquiva MDF-e, CT-e e comprovantes","Mantém pasta digital por operação","Guarda evidências para cobrança"]},
+  {n:"06",t:"Financeiro",f:["Fatura 8% sobre o valor do frete","Controla recebimentos e repasses","Prepara relatórios; Luis aprova pagamentos finais"]},
+  {n:"07",t:"Comercial",f:["Capta embarcadores novos","Gancho: caminhão garantido sem frota própria","Mantém base de contatos ativa"]},
+];
+const COMISSAO = 0.08;
+
+const BRL = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+/* ====== LOGIN ====== */
+function tryLogin(){
+  const v = document.getElementById('pw').value;
+  if(v === ADMIN_PASS){
+    document.getElementById('login').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+  }
+}
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin();});
+
+/* ====== TABS ====== */
+function showTab(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('p-'+id).classList.add('active');
+}
+
+/* ====== PISO MÍNIMO ====== */
+function pisoMinimo(cargaId, eixos, km){
+  const c = CARGAS[cargaId];
+  const i = EIXOS.indexOf(eixos);
+  if(!c || i<0 || c.ccd[i]==null) return null;
+  return c.ccd[i]*km + c.cc[i];
+}
+
+/* ====== INIT ====== */
+let inited=false;
+function init(){
+  if(inited) return; inited=true;
+  document.getElementById('depGrid').innerHTML = DEPS.map(d=>
+    `<div class="dcard"><div class="dn">${d.n}</div><h3>${d.t}</h3><ul>${d.f.map(x=>`<li>${x}</li>`).join('')}</ul></div>`
+  ).join('');
+  const cargoOpts = Object.entries(CARGAS).map(([id,c])=>`<option value="${id}">${c.nome}</option>`).join('');
+  const vehOpts = VEICULOS.map(v=>`<option value="${v.id}">${v.nome}</option>`).join('');
+  document.getElementById('cCargo').innerHTML = cargoOpts;
+  document.getElementById('kCargo').innerHTML = cargoOpts;
+  document.getElementById('cVeh').innerHTML = vehOpts;
+  document.getElementById('kVeh').innerHTML = vehOpts;
+  renderCargas(); renderAntt();
+}
+
+/* ====== PIPELINE DE CARGAS ====== */
+const LS_PIPE='fretetwin_pipeline_v1';
+const getCargas=()=>JSON.parse(localStorage.getItem(LS_PIPE)||'[]');
+const saveCargas=c=>localStorage.setItem(LS_PIPE,JSON.stringify(c));
+function addCarga(){
+  const shipper=document.getElementById('cShipper').value.trim();
+  const route=document.getElementById('cRoute').value.trim();
+  if(!shipper||!route){alert('Informe o embarcador e a rota.');return;}
+  const c=getCargas();
+  c.push({id:Date.now(),shipper,route,
+    cargo:document.getElementById('cCargo').value,
+    veh:document.getElementById('cVeh').value,
+    km:parseFloat(document.getElementById('cKm').value)||0,
+    value:parseFloat(document.getElementById('cValue').value)||0,
+    phone:document.getElementById('cPhone').value.trim(),
+    gates:Array(GATES.length).fill(false)});
+  saveCargas(c);
+  ['cShipper','cRoute','cKm','cValue','cPhone'].forEach(id=>document.getElementById(id).value='');
+  renderCargas();
+}
+function toggleGate(id,i){
+  const c=getCargas();const cg=c.find(x=>x.id===id);
+  if(!cg.gates[i] && i>0 && !cg.gates[i-1]){alert('A etapa anterior não está concluída. O processo funciona como um relógio.');renderCargas();return;}
+  cg.gates[i]=!cg.gates[i];saveCargas(c);renderCargas();
+}
+function delCarga(id){
+  if(!confirm('Excluir esta carga do pipeline?'))return;
+  saveCargas(getCargas().filter(x=>x.id!==id));renderCargas();
+}
+function renderCargas(){
+  const list=document.getElementById('cargaList');const c=getCargas();
+  if(!c.length){list.innerHTML='<p style="color:var(--muted)">Nenhuma carga em acompanhamento. Adicione a primeira acima.</p>';return;}
+  list.innerHTML=c.map(cg=>{
+    const done=cg.gates.filter(Boolean).length;
+    const pct=Math.round(done/GATES.length*100);
+    const veh=VEICULOS.find(v=>v.id===cg.veh);
+    const carga=CARGAS[cg.cargo];
+    let badge='';
+    if(cg.km>0 && cg.value>0 && veh){
+      const piso=pisoMinimo(cg.cargo, veh.eixos, cg.km);
+      if(piso!=null) badge = cg.value>=piso
+        ? `<span class="badge ok">✓ Acima do piso (${BRL(cg.value/cg.km)}/km)</span>`
+        : `<span class="badge bad">⚠ Abaixo do piso (${BRL(cg.value/cg.km)}/km · piso ${BRL(piso/cg.km)}/km)</span>`;
+    }
+    return `<div class="carga">
+      <div class="dh"><div><span class="nm">${cg.shipper}</span><br>
+        <span class="eq">${cg.route} · ${carga?carga.nome:cg.cargo} · ${veh?veh.nome:cg.veh}${cg.km?' · '+cg.km+' km':''}${cg.value?' · '+BRL(cg.value):''}${cg.phone?' · '+cg.phone:''}</span>${badge}</div>
+      <button class="del" onclick="delCarga(${cg.id})">Excluir</button></div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="gates">${GATES.map((g,i)=>{
+        const prevOk = i===0 || cg.gates[i-1];
+        return `<label class="gate ${cg.gates[i]?'done':''} ${!prevOk&&!cg.gates[i]?'blocked':''}">
+          <input type="checkbox" ${cg.gates[i]?'checked':''} onchange="toggleGate(${cg.id},${i})"><span><b>${i+1}.</b> ${g}</span></label>`;
+      }).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ====== CALCULADORA ====== */
+function calcFrete(){
+  const cargaId=document.getElementById('kCargo').value;
+  const veh=VEICULOS.find(v=>v.id===document.getElementById('kVeh').value);
+  const km=parseFloat(document.getElementById('kKm').value)||0;
+  const frete=parseFloat(document.getElementById('kFrete').value)||0;
+  const r=document.getElementById('kResult');
+  r.classList.add('show');
+  if(!km){r.innerHTML='<div class="rline"><span>Informe a distância.</span></div>';return;}
+  const piso=pisoMinimo(cargaId, veh.eixos, km);
+  if(piso==null){r.innerHTML='<div class="rline"><span>Sem coeficiente ANTT para esta combinação (a ANTT não publica 2 eixos para conteinerizada). Consulte a calculadora oficial.</span></div>';return;}
+  const ok = frete>=piso;
+  const comissao = frete*COMISSAO;
+  r.innerHTML=`
+    <div class="rline"><span>Veículo / carga</span><b>${veh.nome} · ${CARGAS[cargaId].nome}</b></div>
+    <div class="rline"><span>Piso mínimo ANTT</span><b>${BRL(piso)} (${BRL(piso/km)}/km)</b></div>
+    <div class="rline"><span>Frete negociado</span><b>${BRL(frete)} (${BRL(frete/km)}/km)</b></div>
+    <div class="rline"><span>Status</span><b class="${ok?'ok':'bad'}">${ok?'✓ ACIMA DO PISO':'⚠ ABAIXO DO PISO — não operar'}</b></div>
+    <div class="rline hl"><span>Comissão FreteTwin (8%)</span><b>${BRL(comissao)}</b></div>
+    <div class="rline"><span>Valor ao transportador</span><b>${BRL(frete-comissao)}</b></div>`;
+}
+
+/* ====== TABELA ANTT ====== */
+function renderAntt(){
+  const head=`<tr><th>Tipo de carga</th>${EIXOS.map(e=>`<th colspan="2" style="text-align:center">${e} eixos</th>`).join('')}</tr>
+  <tr><th></th>${EIXOS.map(()=>`<th>CCD R$/km</th><th>CC R$</th>`).join('')}</tr>`;
+  const rows=Object.values(CARGAS).map(c=>
+    `<tr><td>${c.nome}</td>${EIXOS.map((_,i)=>
+      `<td>${c.ccd[i]==null?'—':c.ccd[i].toFixed(4).replace('.',',')}</td><td>${c.cc[i]==null?'—':c.cc[i].toFixed(2).replace('.',',')}</td>`
+    ).join('')}</tr>`).join('');
+  document.getElementById('anttTable').innerHTML=head+rows;
+  document.getElementById('anttNote').innerHTML=
+    'Coeficientes da <b>Tabela A</b> (operação padrão, veículo e implemento próprios), <b>vigentes desde 30/09/2026</b> — atualização extraordinária motivada pela alta do diesel. '+
+    'A ANTT revisa a tabela semestralmente (janeiro/julho) ou quando o diesel varia ±5%: <b>conferir sempre a calculadora oficial da ANTT antes de fechar um frete</b>. '+
+    'A ANTT não publica coeficientes para 8 eixos. Fórmula: piso = (distância × CCD) + CC.';
+}
+</script>
+</body>
+</html>

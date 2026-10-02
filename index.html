@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreteTwin | Sua carga não espera. A gente move.</title>
+<meta name="description" content="Agenciamento de fretes para embarcadores: encontramos o caminhão certo para a sua carga, negociamos o frete e acompanhamos até a entrega.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#102a2d;--coral:#ef6d4e;--bg:#ffffff;--soft:#f4f7f7;--muted:#5a6c6d;--line:#e3eaea}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.logo{font-weight:800;font-size:24px;letter-spacing:-.5px;text-decoration:none;color:var(--ink)}
+.logo em{font-style:normal;color:var(--coral)}
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--ink);font-weight:600;font-size:15px}
+.nav-links a:hover{color:var(--coral)}
+.btn{display:inline-block;background:var(--coral);color:#fff;font-weight:700;padding:13px 26px;border-radius:10px;text-decoration:none;font-size:15px;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(239,109,78,.35)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn.ghost:hover{box-shadow:none;border-color:var(--coral);color:var(--coral)}
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--ink) 0%,#16383b 60%,#1d4447 100%);color:#fff;padding:96px 0 88px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:480px;height:480px;border:26px solid rgba(239,109,78,.14);border-radius:50%}
+.hero h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;line-height:1.12;max-width:640px}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.hero p{max-width:560px;margin:22px 0 34px;color:#cfdbdb;font-size:18px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero .note{margin-top:20px;font-size:14px;color:#9fb3b3}
+.hero-in{display:flex;align-items:center;gap:52px}
+.hero-tx{flex:1;min-width:0}
+.hero-img{width:400px;max-width:36vw;flex-shrink:0;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.4);object-fit:cover;aspect-ratio:4/3;position:relative;z-index:1}
+@media(max-width:860px){.hero-in{flex-direction:column}.hero-img{width:100%;max-width:480px}}
+/* STRIP */
+.strip{background:var(--coral);color:#fff;padding:18px 0;font-weight:700;letter-spacing:2px;font-size:14px;text-align:center}
+/* SECTIONS */
+section{padding:84px 0}
+section.alt{background:var(--soft)}
+.kicker{color:var(--coral);font-weight:800;letter-spacing:3px;font-size:13px;text-transform:uppercase;margin-bottom:12px}
+h2{font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.2;margin-bottom:16px}
+h2 em{font-style:normal;color:var(--coral)}
+.lead{color:var(--muted);font-size:18px;max-width:640px;margin-bottom:44px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px 28px;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(16,42,45,.10)}
+.card .n{color:var(--coral);font-weight:800;font-size:14px;letter-spacing:2px}
+.card h3{margin:10px 0 10px;font-size:20px}
+.card p{color:var(--muted);font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;margin-top:8px}
+.step{padding:28px 24px;border-left:3px solid var(--line);position:relative}
+.step:first-child{border-left-color:var(--coral)}
+.step .sn{font-size:13px;font-weight:800;color:var(--coral);letter-spacing:2px}
+.step h3{margin:8px 0;font-size:19px}
+.step p{color:var(--muted);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:10px 22px;font-weight:600;font-size:15px}
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);padding:22px 0}
+.faq-item h3{font-size:18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-item h3 span{color:var(--coral);font-size:24px}
+.faq-item p{color:var(--muted);margin-top:10px;display:none}
+.faq-item.open p{display:block}
+/* CONTACT */
+.contact{background:var(--ink);color:#fff;text-align:center}
+.contact h2{color:#fff}
+.contact p{color:#cfdbdb;max-width:560px;margin:0 auto 32px}
+.contact .phone{font-size:26px;font-weight:800;color:#fff;text-decoration:none;display:block;margin:18px 0 6px}
+.contact .hours{font-size:14px;color:#9fb3b3}
+footer{background:#0b1e20;color:#8fa3a3;padding:34px 0;font-size:14px}
+.foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+@media(max-width:720px){.nav-links a:not(.btn){display:none}section{padding:60px 0}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="#inicio">Frete<em>Twin</em></a>
+    <div class="nav-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#veiculos">Veículos</a>
+      <a href="#faq">Dúvidas</a>
+      <!-- Número provisório: trocar pelo WhatsApp BR (+55) quando existir -->
+      <a class="btn" href="https://wa.me/17863865612?text=Ol%C3%A1%20FreteTwin%2C%20tenho%20uma%20carga%20para%20mover" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="wrap hero-in">
+    <div class="hero-tx">
+    <h1>Sua carga não pode esperar. <em>A gente encontra o caminhão.</em></h1>
+    <p>Agenciamento de fretes para embarcadores: cotamos, negociamos e colocamos o veículo certo na sua carga — com documentação conferida e acompanhamento até a entrega.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://wa.me/17863865612?text=Ol%C3%A1%20FreteTwin%2C%20tenho%20uma%20carga%20para%20mover" target="_blank" rel="noopener">Cotar meu frete no WhatsApp</a>
+      <a class="btn ghost" href="#como-funciona" style="color:#fff;border-color:#fff">Como funciona</a>
+    </div>
+    <div class="note">Atendimento rápido · Frete dentro do piso mínimo ANTT · Você aprova cada etapa</div>
+    </div>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=900&q=80" alt="Caminhão transportando carga pela rodovia">
+  </div>
+</header>
+
+<div class="strip">ENCONTRAMOS O CAMINHÃO &nbsp;✦&nbsp; NEGOCIAMOS O FRETE &nbsp;✦&nbsp; ACOMPANHAMOS ATÉ A ENTREGA</div>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="kicker">Serviços</div>
+    <h2>Sua carga, <em>sem dor de cabeça.</em></h2>
+    <p class="lead">Você informa a carga. A gente cuida de todo o resto.</p>
+    <div class="grid3">
+      <div class="card"><div class="n">01</div><h3>Busca do veículo ideal</h3><p>Localizamos caminhoneiros autônomos e transportadoras com o veículo exato para a sua carga: peso, carroceria e rota.</p></div>
+      <div class="card"><div class="n">02</div><h3>Cotação e negociação</h3><p>Cotamos com várias opções e negociamos o melhor frete para você — sempre respeitando o piso mínimo da ANTT.</p></div>
+      <div class="card"><div class="n">03</div><h3>Motorista verificado</h3><p>Conferimos RNTRC, CNH e histórico do motorista antes de vincular qualquer veículo à sua carga.</p></div>
+      <div class="card"><div class="n">04</div><h3>Documentação conferida</h3><p>Verificamos CIOT, MDF-e e CT-e antes da viagem começar. Sem documento certo, o caminhão não sai.</p></div>
+      <div class="card"><div class="n">05</div><h3>Acompanhamento real</h3><p>Monitoramos a viagem até a entrega, com comprovante e comunicação clara em cada etapa.</p></div>
+      <div class="card"><div class="n">06</div><h3>Rotas recorrentes</h3><p>Tem carga toda semana? Montamos uma programação fixa com veículos de confiança para a sua rota.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="como-funciona">
+  <div class="wrap">
+    <div class="kicker">Passo a passo</div>
+    <h2>Da sua mensagem <em>à entrega.</em></h2>
+    <p class="lead">Um processo claro, sem surpresas.</p>
+    <div class="steps">
+      <div class="step"><div class="sn">PASSO 1</div><h3>Conte sua carga</h3><p>Origem, destino, tipo de mercadoria, peso e data. Pode ser por WhatsApp, em 2 minutos.</p></div>
+      <div class="step"><div class="sn">PASSO 2</div><h3>Receba as opções</h3><p>Apresentamos veículos disponíveis com valor do frete e prazo. Você escolhe.</p></div>
+      <div class="step"><div class="sn">PASSO 3</div><h3>A gente verifica tudo</h3><p>Motorista, documentos e CIOT conferidos antes do carregamento.</p></div>
+      <div class="step"><div class="sn">PASSO 4</div><h3>Acompanhamos a entrega</h3><p>Seguimos a viagem até o destino e confirmamos a entrega com comprovante.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="veiculos">
+  <div class="wrap">
+    <div class="kicker">Veículos</div>
+    <h2>Conseguimos <em>o veículo certo.</em></h2>
+    <p class="lead">Do truck à rodotrem: encontramos a configuração ideal para a sua carga.</p>
+    <div class="chips">
+      <span class="chip">Toco</span><span class="chip">Truck</span><span class="chip">Carreta</span>
+      <span class="chip">Bitrem</span><span class="chip">Rodotrem</span><span class="chip">Baú</span>
+      <span class="chip">Sider</span><span class="chip">Graneleiro</span><span class="chip">Tanque</span>
+      <span class="chip">Prancha</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <div class="kicker">Dúvidas frequentes</div>
+    <h2>Antes de <em>nos chamar.</em></h2>
+    <div style="max-width:720px;margin-top:24px">
+      <div class="faq-item"><h3>Quanto custa o serviço? <span>+</span></h3><p>Cobramos uma comissão de 8% sobre o valor do frete fechado, definida em contrato. Sem taxas escondidas.</p></div>
+      <div class="faq-item"><h3>Vocês emitem o CIOT? <span>+</span></h3><p>O CIOT é sempre emitido por quem contrata o frete. Nós conferimos se ele foi gerado corretamente e se o valor respeita o piso mínimo da ANTT antes do caminhão sair.</p></div>
+      <div class="faq-item"><h3>O que é o piso mínimo da ANTT? <span>+</span></h3><p>É o valor mínimo legal do frete por km/eixo, definido pela ANTT. Nenhuma operação pode ser fechada abaixo dele — o próprio sistema bloqueia. Trabalhamos sempre acima do piso.</p></div>
+      <div class="faq-item"><h3>Quais documentos eu preciso? <span>+</span></h3><p>A nota fiscal da mercadoria. Da documentação do transporte (MDF-e, CT-e, CIOT) a gente cuida da conferência com o motorista/transportadora.</p></div>
+      <div class="faq-item"><h3>Vocês atendem todo o Brasil? <span>+</span></h3><p>Sim. Operamos 100% remoto e atendemos embarcadores de qualquer estado, com veículos verificados em todas as regiões.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <div class="wrap">
+    <div class="kicker">Contato</div>
+    <h2>Vamos <em>mover sua carga.</em></h2>
+    <p>Chame no WhatsApp com origem, destino e tipo de carga — respondemos com a cotação e os próximos passos.</p>
+    <a class="btn" href="https://wa.me/17863865612?text=Ol%C3%A1%20FreteTwin%2C%20tenho%20uma%20carga%20para%20mover" target="_blank" rel="noopener">Abrir WhatsApp</a>
+    <a class="phone" href="tel:+17863865612">+1 (786) 386-5612</a>
+    <div class="hours">Seg–Sáb · 8h–20h (horário de Brasília)</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <a class="logo" href="#inicio" style="font-size:20px;color:#fff">Frete<em>Twin</em></a>
+    <div>© 2026 FreteTwin · Agenciamento de fretes</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item h3').forEach(h=>{
+  h.addEventListener('click',()=>h.parentElement.classList.toggle('open'));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
